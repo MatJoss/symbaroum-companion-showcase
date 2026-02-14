@@ -1,0 +1,112 @@
+/// Configuration Firebase
+/// Contient les identifiants et configuration du projet Firebase
+///
+/// ⚠️ INSTRUCTIONS :
+/// 1. Copier ce fichier en firebase_config.dart
+/// 2. Remplacer toutes les valeurs YOUR_* par vos vraies clés Firebase
+/// 3. Ne JAMAIS commiter firebase_config.dart
+library;
+
+class FirebaseConfig {
+  // Configuration commune
+  static const String projectId = 'YOUR_PROJECT_ID';
+  static const String storageBucket = 'YOUR_PROJECT_ID.firebasestorage.app';
+  
+  // Configuration Web
+  static const String webApiKey = 'YOUR_WEB_API_KEY';
+  static const String webAuthDomain = '$projectId.firebaseapp.com';
+  static const String webMessagingSenderId = 'YOUR_MESSAGING_SENDER_ID';
+  static const String webAppId = 'YOUR_WEB_APP_ID';
+  // reCAPTCHA v3 site key for App Check (Web). Leave empty to skip Web App Check activation.
+  static const String recaptchaSiteKey = 'YOUR_RECAPTCHA_SITE_KEY';
+  // Google Sign-In client ID for Web (OAuth 2.0 client ID) - used by GoogleSignIn on web
+  static const String googleWebClientId = 'YOUR_GOOGLE_WEB_CLIENT_ID';
+  
+  // Configuration Android
+  static const String androidApiKey = 'YOUR_ANDROID_API_KEY';
+  static const String androidAppId = 'YOUR_ANDROID_APP_ID';
+  
+  // Configuration iOS (si nécessaire plus tard)
+  static const String iosApiKey = 'YOUR_IOS_API_KEY';
+  static const String iosAppId = 'YOUR_IOS_APP_ID';
+  static const String iosBundleId = 'com.yourcompany.yourapp';
+  
+  // Firestore collections
+  static const String usersCollection = 'users';
+  static const String campagnesCollection = 'campagnes';
+  static const String personnagesCollection = 'personnages';
+  static const String archetypesCollection = 'archetypes';
+  static const String armesCollection = 'armes';
+  static const String armuresCollection = 'armures';
+  static const String artefactsCollection = 'artefacts';
+  static const String atoutsFardeauxCollection = 'atouts_fardeaux';
+  static const String classesCollection = 'classes';
+  static const String equipementsCollection = 'equipements';
+  static const String pouvoirsMystiquesCollection = 'pouvoirs_mystiques';
+  static const String qualitesArmesCollection = 'qualites_armes';
+  static const String qualitesArmuresCollection = 'qualites_armures';
+  static const String racesCollection = 'races';
+  static const String rituelsCollection = 'rituels';
+  static const String talentsCollection = 'talents';
+  static const String traitsCollection = 'traits';
+  static const String templatesCollection = 'templates_samples';
+  
+  // Storage paths
+  static const String avatarsPath = 'avatars';
+  
+  // Rôles utilisateur
+  static const String roleMJ = 'MJ';
+  static const String rolePJ = 'PJ';
+  
+  /// Récupère le nom de collection à partir d'un type
+  static String getCollectionName(String type) {
+    switch (type.toLowerCase()) {
+      case 'user':
+      case 'users':
+        return usersCollection;
+      case 'campagne':
+      case 'campagnes':
+        return campagnesCollection;
+      case 'archetype':
+      case 'archetypes':
+        return archetypesCollection;
+      case 'arme':
+      case 'armes':
+        return armesCollection;
+      case 'armure':
+      case 'armures':
+        return armuresCollection;
+      case 'artefact':
+      case 'artefacts':
+        return artefactsCollection;
+      case 'atout':
+      case 'fardeau':
+      case 'atouts_fardeaux':
+        return atoutsFardeauxCollection;
+      case 'classe':
+      case 'classes':
+        return classesCollection;
+      case 'equipement':
+      case 'equipements':
+        return equipementsCollection;
+      case 'pouvoir':
+      case 'pouvoirs':
+      case 'pouvoirs_mystiques':
+        return pouvoirsMystiquesCollection;
+      case 'talent':
+      case 'talents':
+        return talentsCollection;
+      case 'trait':
+      case 'traits':
+        return traitsCollection;
+      case 'race':
+      case 'races':
+        return racesCollection;
+      case 'rituel':
+      case 'rituels':
+        return rituelsCollection;
+      default:
+        throw ArgumentError('Type de collection inconnu: $type');
+    }
+  }
+}

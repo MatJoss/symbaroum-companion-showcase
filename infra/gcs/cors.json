@@ -1,0 +1,13 @@
+[
+  {
+    "origin": [
+      "http://localhost",
+      "http://localhost:5000",
+      "http://localhost:53308",
+      "https://YOUR_PROJECT_ID.web.app",
+      "https://YOUR_PROJECT_ID.firebaseapp.com"
+    ],
+    "method": ["GET", "HEAD", "PUT", "POST", "DELETE"],
+    "maxAgeSeconds": 3600
+  }
+]

@@ -1,0 +1,52 @@
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== Flutter =====
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+/coverage/
+*.iml
+
+# ===== Firebase (NE JAMAIS commiter) =====
+**/google-services.json
+**/GoogleService-Info.plist
+**/firebase_config.dart
+.firebase/
+.firebaserc
+
+# ===== Android Signing (NE JAMAIS commiter) =====
+**/key.properties
+*.jks
+*.keystore
+
+# ===== Logs =====
+*.log
+firebase-debug.*
+firestore_debug.*
+
+# ===== Fichiers locaux (non showcase) =====
+docs/
+
+# ===== Plateformes non utilisées =====
+flutter_app/ios/
+flutter_app/linux/
+flutter_app/macos/
+flutter_app/windows/
+flutter_app/test/
+
+# ===== Lock files =====
+package-lock.json
+pubspec.lock

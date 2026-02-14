@@ -1,0 +1,79 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules
+// Gère les permissions d'accès aux fichiers stockés (avatars)
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // ===================== HELPER FUNCTIONS =====================
+    
+    /// Vérifie si l'utilisateur est authentifié
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    /// Vérifie si le fichier est une image
+    function isImageFile() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    /// Vérifie si la taille du fichier est valide (< 5MB)
+    function isValidSize() {
+      return request.resource.size < 5 * 1024 * 1024; // 5MB
+    }
+    
+    /// Vérifie si l'utilisateur est admin
+    /// Note: Nécessite une requête à Firestore (coûte en lecture)
+    function isAdmin() {
+      return isAuthenticated() 
+        && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.roles.admin == true;
+    }
+    
+    // ===================== AVATARS =====================
+    
+    /// Avatars des personnages
+    /// Path: /avatars/{personnageId}/avatar.jpg
+    match /avatars/{personnageId}/{fileName} {
+      
+      // 🔍 LECTURE
+      // Tous les utilisateurs authentifiés peuvent voir les avatars
+      allow read: if isAuthenticated();
+      
+      // ✏️ ÉCRITURE (CREATE/UPDATE)
+      // Utilisateur authentifié + image valide + taille OK
+      // TODO: Vérifier que l'utilisateur a accès au personnage via Firestore
+      allow write: if isAuthenticated()
+        && isImageFile()
+        && isValidSize();
+      
+      // ❌ SUPPRESSION
+      // Utilisateur authentifié ou admin
+      // TODO: Vérifier que l'utilisateur est MJ de la campagne
+      allow delete: if isAuthenticated() || isAdmin();
+    }
+    
+    // ===================== AUTRES FICHIERS =====================
+    
+    /// Par défaut, aucun accès
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ===================== NOTES =====================
+//
+// LIMITATIONS:
+// - Les requêtes Firestore dans les rules Storage coûtent des lectures
+// - Éviter d'utiliser firestore.get() dans isAdmin() si possible
+// - Préférer valider côté client ou via Cloud Functions
+//
+// AMÉLIORATIONS FUTURES:
+// - Vérifier que le personnageId existe dans une campagne accessible
+// - Vérifier que l'utilisateur est MJ ou propriétaire du personnage
+// - Ajouter limitation du nombre d'uploads par jour
+// - Ajouter support pour miniatures (thumbnails)
+//
+// DÉPLOIEMENT:
+// Déployer avec: firebase deploy --only storage
